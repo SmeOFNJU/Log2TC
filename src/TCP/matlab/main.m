@@ -1,0 +1,17 @@
+function main
+% [val,x1,x2]=CalAvgWeiError('./covInfo/print_tokens2/stateGSO_AOTFD.txt','./covInfo/print_tokens2/stateGSOResult.txt','./covInfo/print_tokens2/stateFile.txt','./covInfo/print_tokens2/stateOT.txt','./covInfo/print_tokens2/stateOri.txt');
+% [val2,x12,x22]=CalAvgWeiError('./covInfo/print_tokens2/blockGSO_AOTFD.txt','./covInfo/print_tokens2/blockGSOResult.txt','./covInfo/print_tokens2/newBlockFile.txt','./covInfo/print_tokens2/blockOT.txt','./covInfo/print_tokens2/blockOri.txt');
+% [val3,x13,x23]=CalAvgWeiError('./covInfo/print_tokens2/branchGSO_AOTFD.txt','./covInfo/print_tokens2/branchGSOResult.txt','./covInfo/print_tokens2/branchFile.txt','./covInfo/print_tokens2/branchOT.txt','./covInfo/print_tokens2/branchOri.txt');
+% [val,x1,x2]=CalAvgWeiError('./covInfo/print_tokens/stateGSO_AOTFD.txt','./covInfo/print_tokens/stateGSOResult.txt','./covInfo/print_tokens/stateFile.txt','./covInfo/print_tokens/stateOT.txt','./covInfo/print_tokens/stateOri.txt');
+% [val2,x12,x22]=CalAvgWeiError('./covInfo/print_tokens/blockGSO_AOTFD.txt','./covInfo/print_tokens/blockGSOResult.txt','./covInfo/print_tokens/newBlockFile.txt','./covInfo/print_tokens/blockOT.txt','./covInfo/print_tokens/blockOri.txt');
+% [val3,x13,x23]=CalAvgWeiError('./covInfo/print_tokens/branchGSO_AOTFD.txt','./covInfo/print_tokens/branchGSOResult.txt','./covInfo/print_tokens/branchFile.txt','./covInfo/print_tokens/branchOT.txt','./covInfo/print_tokens/branchOri.txt');
+% [val,x1,x2]=CalAvgWeiError('./covInfo/schedule/stateGSO_AOTFD.txt','./covInfo/schedule/stateGSOResult.txt','./covInfo/schedule/stateFile.txt','./covInfo/schedule/stateOT.txt','./covInfo/schedule/stateOri.txt');
+% [val2,x12,x22]=CalAvgWeiError('./covInfo/schedule/blockGSO_AOTFD.txt','./covInfo/schedule/blockGSOResult.txt','./covInfo/schedule/newBlockFile.txt','./covInfo/schedule/blockOT.txt','./covInfo/schedule/blockOri.txt');
+% [val3,x13,x23]=CalAvgWeiError('./covInfo/schedule/branchGSO_AOTFD.txt','./covInfo/schedule/branchGSOResult.txt','./covInfo/schedule/branchFile.txt','./covInfo/schedule/branchOT.txt','./covInfo/schedule/branchOri.txt');
+% [val,x1,x2]=CalAvgWeiError('./covInfo/schedule2/stateGSO_AOTFD.txt','./covInfo/schedule2/stateGSOResult.txt','./covInfo/schedule2/stateFile.txt','./covInfo/schedule2/stateOT.txt','./covInfo/schedule2/stateOri.txt');
+% [val2,x12,x22]=CalAvgWeiError('./covInfo/schedule2/blockGSO_AOTFD.txt','./covInfo/schedule2/blockGSOResult.txt','./covInfo/schedule2/newBlockFile.txt','./covInfo/schedule2/blockOT.txt','./covInfo2/schedule/blockOri.txt');
+% [val3,x13,x23]=CalAvgWeiError('./covInfo/schedule2/branchGSO_AOTFD.txt','./covInfo/schedule2/branchGSOResult.txt','./covInfo/schedule2/branchFile.txt','./covInfo/schedule2/branchOT.txt','./covInfo2/schedule/branchOri.txt');
+% [val,x1,x2]=CalAvgWeiError('./covInfo/space/stateGSO_AOTFD.txt','./covInfo/space/stateGSOResult.txt','./covInfo/space/stateFile.txt','./covInfo/space/stateOT.txt','./covInfo/space/stateOri.txt');
+[val2,x12,x22]=CalAvgWeiError('./covInfo/space/blockGSO_AOTFD.txt','./covInfo/space/blockGSOResult.txt','./covInfo/space/newBlockFile.txt','./covInfo/space/blockOT.txt','./covInfo/space/blockOri.txt');
+[val3,x13,x23]=CalAvgWeiError('./covInfo/space/branchGSO_AOTFD.txt','./covInfo/space/branchGSOResult.txt','./covInfo/space/branchFile.txt','./covInfo/space/branchOT.txt','./covInfo/space/branchOri.txt');
+end
