@@ -1,0 +1,933 @@
+        -:    0:Source:print_tokens.c
+        -:    0:Graph:print_tokens.gcno
+        -:    0:Data:print_tokens.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:
+        -:    2:
+        -:    3:# include <ctype.h>
+        -:    4:
+        -:    5:# define START  5
+        -:    6:# define TRUE  1
+        -:    7:# define FALSE 0
+        -:    8:
+        -:    9:typedef int BOOLEAN;
+        -:   10:typedef char *string;
+        -:   11:
+        -:   12:# include <stdlib.h>
+        -:   13:# include <stdio.h>
+        -:   14:#include <string.h>
+        -:   15:# include "tokens.h"
+        -:   16:
+        -:   17:static token numeric_case();
+        -:   18:static token error_or_eof_case();
+        -:   19:static int check_delimiter();
+        -:   20:static int keyword(int state);
+        -:   21:static int special(int state);
+        -:   22:static void skip(character_stream stream_ptr);
+        -:   23:static int constant(int state,char token_str[],int token_ind);
+        -:   24:static int next_state();
+        -:   25:static void get_actual_token(char token_str[],int token_ind);
+        -:   26:
+        -:   27:BOOLEAN print_token(token token_ptr);
+        -:   28:
+        -:   29:
+        -:   30:
+function main called 1 returned 0% blocks executed 82%
+        1:   31:main(argc,argv)
+        1:   31-block  0
+        -:   32:int argc;
+        -:   33:char *argv[];
+        -:   34:{
+        -:   35:      token token_ptr;
+        -:   36:      token_stream stream_ptr;
+        -:   37:
+        1:   38:      if(argc>2)
+        1:   38-block  0
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+        -:   39:      {
+    #####:   40:          fprintf(stdout, "The format is print_tokens filename(optional)\n");
+    $$$$$:   40-block  0
+call    0 never executed
+    #####:   41:          exit(1);
+call    0 never executed
+        -:   42:      }
+        1:   43:      stream_ptr=open_token_stream(argv[1]);
+        1:   43-block  0
+call    0 returned 100%
+        -:   44:
+        6:   45:      while(!is_eof_token((token_ptr=get_token(stream_ptr))))
+        6:   45-block  0
+call    0 returned 100%
+call    1 returned 100%
+branch  2 taken 83%
+branch  3 taken 17% (fallthrough)
+        5:   46:                print_token(token_ptr);
+        5:   46-block  0
+call    0 returned 100%
+        1:   47:      print_token(token_ptr);
+        1:   47-block  0
+call    0 returned 100%
+        1:   48:  exit(0);
+        -:   49:}
+        -:   50:
+        -:   51:/* *********************************************************************
+        -:   52:       Function name : open_character_stream
+        -:   53:       Input         : filename
+        -:   54:       Output        : charactre stream.
+        -:   55:       Exceptions    : If file name doesn't exists it will
+        -:   56:                       exit from the program.
+        -:   57:       Description   : The function first allocates the memory for
+        -:   58:                       the structure and initilizes it. The constant
+        -:   59:                       START gives the first character available in
+        -:   60:                       the stream. It ckecks whether the filename is
+        -:   61:                       empty string. If it is it assigns file pointer
+        -:   62:                       to stdin else it opens the respective file as input.                   * ******************************************************************* */
+        -:   63:
+function open_character_stream called 1 returned 100% blocks executed 50%
+        1:   64:character_stream open_character_stream(FILENAME)
+        1:   64-block  0
+        -:   65:string FILENAME;
+        -:   66:{
+        -:   67:      character_stream stream_ptr;
+        -:   68:
+        1:   69:      stream_ptr=(character_stream)malloc(sizeof(struct stream_type));
+        1:   70:      stream_ptr->stream_ind=START;
+        1:   71:      stream_ptr->stream[START]='\0';
+        1:   72:      if(FILENAME == NULL)
+        1:   72-block  0
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        1:   73:          stream_ptr->fp=stdin;
+        1:   73-block  0
+    #####:   74:      else if((stream_ptr->fp=fopen(FILENAME,"r"))==NULL)
+    $$$$$:   74-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:   75:           {
+    #####:   76:               fprintf(stdout, "The file %s doesn't exists\n",FILENAME);
+    $$$$$:   76-block  0
+call    0 never executed
+    #####:   77:               exit(0);
+call    0 never executed
+        -:   78:           }
+        1:   79:      return(stream_ptr);
+        1:   79-block  0
+        -:   80:}
+        -:   81:
+        -:   82:/* *********************************************************************
+        -:   83:   Function name : get_char
+        -:   84:   Input         : charcter_stream.
+        -:   85:   Output        : character.
+        -:   86:   Exceptions    : None.
+        -:   87:   Description   : This function takes character_stream type variable
+        -:   88:                   as input and returns one character. If the stream is
+        -:   89:                   empty then it reads the next line from the file and
+        -:   90:                   returns the character.
+        -:   91: * ****************************************************************** */
+        -:   92:
+function get_char called 14 returned 100% blocks executed 100%
+       14:   93:CHARACTER get_char(stream_ptr)
+       14:   93-block  0
+        -:   94:character_stream stream_ptr;
+        -:   95:{
+       14:   96:      if(stream_ptr->stream[stream_ptr->stream_ind] == '\0')
+       14:   96-block  0
+branch  0 taken 14% (fallthrough)
+branch  1 taken 86%
+        -:   97:      {
+        2:   98:              if(fgets(stream_ptr->stream+START,80-START,stream_ptr->fp) == NULL)/* Fix bug: add -START - hf*/
+        2:   98-block  0
+call    0 returned 100%
+branch  1 taken 50% (fallthrough)
+branch  2 taken 50%
+        1:   99:                    stream_ptr->stream[START]=EOF;
+        1:   99-block  0
+        2:  100:              stream_ptr->stream_ind=START;
+        2:  100-block  0
+        -:  101:      }
+       14:  102:      return(stream_ptr->stream[(stream_ptr->stream_ind)++]);
+       14:  102-block  0
+        -:  103:}
+        -:  104:
+        -:  105:/* *******************************************************************
+        -:  106:   Function name : is_end_of_character_stream.
+        -:  107:   Input         : character_stream.
+        -:  108:   Output        : Boolean value.
+        -:  109:   Description   : This function checks whether it is end of character
+        -:  110:                   stream or not. It returns BOOLEANvariable which is
+        -:  111:                   true or false. The function checks whether the last
+        -:  112:                   read character is end file character or not and
+        -:  113:                   returns the value according to it.
+        -:  114: * ****************************************************************** */
+        -:  115:
+function is_end_of_character_stream called 3 returned 100% blocks executed 100%
+        3:  116:BOOLEAN is_end_of_character_stream(stream_ptr)
+        3:  116-block  0
+        -:  117:character_stream stream_ptr;
+        -:  118:{
+        3:  119:      if(stream_ptr->stream[stream_ptr->stream_ind-1] == EOF)
+        3:  119-block  0
+branch  0 taken 33% (fallthrough)
+branch  1 taken 67%
+        1:  120:            return(TRUE);
+        1:  120-block  0
+        -:  121:      else
+        2:  122:            return(FALSE);
+        2:  122-block  0
+        -:  123:}
+        -:  124:
+        -:  125:/* *********************************************************************
+        -:  126:   Function name : unget_char
+        -:  127:   Input         : character,character_stream.
+        -:  128:   Output        : void.
+        -:  129:   Description   : This function adds the character ch to the stream.
+        -:  130:                   This is accomplished by decrementing the stream_ind
+        -:  131:                   and storing it in the stream. If it is not possible
+        -:  132:                   to unget the character then it returns
+        -:  133: * ******************************************************************* */
+        -:  134:
+function unget_char called 2 returned 100% blocks executed 75%
+        2:  135:void unget_char(ch,stream_ptr)
+        2:  135-block  0
+        -:  136:CHARACTER ch;
+        -:  137:character_stream stream_ptr;
+        -:  138:{
+        2:  139:      if(stream_ptr->stream_ind == 0)
+        2:  139-block  0
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  140:          return;
+    $$$$$:  140-block  0
+        -:  141:      else
+        2:  142:          stream_ptr->stream[--(stream_ptr->stream_ind)]=ch;
+        2:  143:      return;
+        2:  143-block  0
+        -:  144:}
+        -:  145:
+        -:  146:
+        -:  147:/* *******************************************************************
+        -:  148:   Function name : open_token_stream
+        -:  149:   Input         : filename
+        -:  150:   Output        : token_stream
+        -:  151:   Exceptions    : Exits if the file specified by filename not found.
+        -:  152:   Description   : This function takes filename as input and opens the
+        -:  153:                   token_stream which is nothing but the character stream.
+        -:  154:                   This function allocates the memory for token_stream
+        -:  155:                   and calls open_character_stream to open the file as
+        -:  156:                   input. This function returns the token_stream.
+        -:  157: * ****************************************************************** */
+        -:  158:
+function open_token_stream called 1 returned 100% blocks executed 100%
+        1:  159:token_stream open_token_stream(FILENAME)
+        1:  159-block  0
+        -:  160:string FILENAME;
+        -:  161:{
+        -:  162:    token_stream token_ptr;
+        -:  163:
+        1:  164:    token_ptr=(token_stream)malloc(sizeof(struct token_stream_type));
+        1:  165:    token_ptr->ch_stream=open_character_stream(FILENAME);/* Get character
+        1:  165-block  0
+call    0 returned 100%
+        -:  166:                                                             stream  */
+        1:  167:    return(token_ptr);
+        -:  168:}
+        -:  169:
+        -:  170:/* ********************************************************************
+        -:  171:   Function name : get_token
+        -:  172:   Input         : token_stream
+        -:  173:   Output        : token
+        -:  174:   Exceptions    : none.
+        -:  175:   Description   : This function returns the next token from the
+        -:  176:                   token_stream.The type of token is integer and specifies
+        -:  177:                   only the type of the token. DFA is used for finding the
+        -:  178:                   next token. cu_state is initialized to zero and charcter
+        -:  179:                   are read until the the is the final state and it
+        -:  180:                   returns the token type.
+        -:  181:* ******************************************************************* */
+        -:  182:
+function get_token called 6 returned 100% blocks executed 57%
+        6:  183:token get_token(tstream_ptr)
+        6:  183-block  0
+        -:  184:token_stream tstream_ptr;
+        -:  185:{
+        -:  186:      char token_str[80]; /* This buffer stores the current token */
+        -:  187:      int token_ind;      /* Index to the token_str  */
+        -:  188:      token token_ptr;
+        -:  189:      CHARACTER ch;
+        -:  190:      int cu_state,next_st,token_found;
+        -:  191:
+        6:  192:      token_ptr=(token)(malloc(sizeof(struct token_type)));
+        6:  193:      ch=get_char(tstream_ptr->ch_stream);
+        6:  193-block  0
+call    0 returned 100%
+        6:  194:      cu_state=token_ind=token_found=0;
+       14:  195:      while(!token_found)
+       14:  195-block  0
+branch  0 taken 100%
+branch  1 taken 0% (fallthrough)
+        -:  196:      {
+       14:  197:	  if(token_ind < 80) /* ADDED ERROR CHECK - hf */
+       14:  197-block  0
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        -:  198:	  {
+       14:  199:	      token_str[token_ind++]=ch;
+       14:  200:	      next_st=next_state(cu_state,ch);
+       14:  200-block  0
+call    0 returned 100%
+        -:  201:	  }
+        -:  202:	  else
+        -:  203:	  {
+    #####:  204:	      next_st = -1; /* - hf */
+    $$$$$:  204-block  0
+        -:  205:	  }
+       14:  206:	  if (next_st == -1) { /* ERROR or EOF case */
+       14:  206-block  0
+branch  0 taken 21% (fallthrough)
+branch  1 taken 79%
+        6:  207:	      return(error_or_eof_case(tstream_ptr,
+        3:  207-block  0
+call    0 returned 100%
+        6:  207-block  1
+        -:  208:				       token_ptr,cu_state,token_str,token_ind,ch));
+       11:  209:	  } else if (next_st == -2) {/* This is numeric case. */
+       11:  209-block  0
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  210:	      return(numeric_case(tstream_ptr,token_ptr,ch,
+    $$$$$:  210-block  0
+call    0 never executed
+        -:  211:				  token_str,token_ind));
+       11:  212:	  } else if (next_st == -3) {/* This is the IDENTIFIER case */
+       11:  212-block  0
+branch  0 taken 18% (fallthrough)
+branch  1 taken 82%
+        2:  213:	      token_ptr->token_id=IDENTIFIER;
+        2:  214:	      unget_char(ch,tstream_ptr->ch_stream);
+        2:  214-block  0
+call    0 returned 100%
+        2:  215:	      token_ind--;
+        2:  216:	      get_actual_token(token_str,token_ind);
+call    0 returned 100%
+        2:  217:	      strcpy(token_ptr->token_string,token_str);
+        2:  218:	      return(token_ptr);
+        -:  219:	  }
+        -:  220:
+        9:  221:	  switch(next_st)
+        9:  221-block  0
+branch  0 taken 89%
+branch  1 taken 0%
+branch  2 taken 0%
+branch  3 taken 11%
+branch  4 taken 0%
+        -:  222:            {
+        8:  223:                 default : break;
+        8:  223-block  0
+        -:  224:                 case 6  : /* These are all KEYWORD cases. */
+        -:  225:                 case 9  :
+        -:  226:                 case 11 :
+        -:  227:                 case 13 :
+    #####:  228:                 case 16 : ch=get_char(tstream_ptr->ch_stream);
+    $$$$$:  228-block  0
+call    0 never executed
+    #####:  229:                           if(check_delimiter(ch)==TRUE)
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  230:                           {
+    #####:  231:                                 token_ptr->token_id=keyword(next_st);
+    $$$$$:  231-block  0
+call    0 never executed
+    #####:  232:                                 unget_char(ch,tstream_ptr->ch_stream);
+call    0 never executed
+    #####:  233:                                 token_ptr->token_string[0]='\0';
+    #####:  234:                                 return(token_ptr);
+        -:  235:                           }
+    #####:  236:                           unget_char(ch,tstream_ptr->ch_stream);
+    $$$$$:  236-block  0
+call    0 never executed
+    #####:  237:                           break;
+        -:  238:                 case 19 : /* These are all special SPECIAL character */
+        -:  239:                 case 20 : /* cases */
+        -:  240:                 case 21 :
+        -:  241:                 case 22 :
+        -:  242:                 case 23 :
+        -:  243:                 case 24 :
+        -:  244:                 case 25 :
+    #####:  245:                 case 32 : token_ptr->token_id=special(next_st);
+    $$$$$:  245-block  0
+call    0 never executed
+    #####:  246:                           token_ptr->token_string[0]='\0';
+    #####:  247:                           return(token_ptr);
+        -:  248:                 case 27 : /* These are constant cases */
+        1:  249:                 case 29 : token_ptr->token_id=constant(next_st,token_str,token_ind);
+        1:  249-block  0
+call    0 returned 100%
+        1:  250:                           get_actual_token(token_str,token_ind);
+call    0 returned 100%
+        1:  251:                           strcpy(token_ptr->token_string,token_str);
+        1:  252:                           return(token_ptr);
+        -:  253:                 case 30 :  /* This is COMMENT case */
+    #####:  254:                           skip(tstream_ptr->ch_stream);
+    $$$$$:  254-block  0
+call    0 never executed
+    #####:  255:                           token_ind=next_st=0;
+    #####:  256:                           break;
+        -:  257:            }
+        8:  258:            cu_state=next_st;
+        8:  259:            ch=get_char(tstream_ptr->ch_stream);
+        8:  259-block  0
+call    0 returned 100%
+        -:  260:      }
+    #####:  261:}
+    $$$$$:  261-block  0
+        -:  262:
+        -:  263:/* ******************************************************************
+        -:  264:   Function name : numeric_case
+        -:  265:   Input         : tstream_ptr,token_ptr,ch,token_str,token_ind
+        -:  266:   Output        : token_ptr;
+        -:  267:   Exceptions    : none
+        -:  268:   Description   : It checks for the delimiter, if it is then it
+        -:  269:                   forms numeric token else forms error token.
+        -:  270: * ****************************************************************** */
+        -:  271:
+function numeric_case called 0 returned 0% blocks executed 0%
+    #####:  272:static token numeric_case(tstream_ptr,token_ptr,ch,token_str,token_ind)
+    $$$$$:  272-block  0
+        -:  273:token_stream tstream_ptr;
+        -:  274:token token_ptr;
+        -:  275:char ch,token_str[];
+        -:  276:int token_ind;
+        -:  277:{
+    #####:  278:        if(check_delimiter(ch)!=TRUE)
+    $$$$$:  278-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  279:        {   /* Error case */
+    #####:  280:            token_ptr->token_id=ERROR;
+    #####:  281:            while(check_delimiter(ch)==FALSE)
+    $$$$$:  281-block  0
+    $$$$$:  281-block  1
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+        -:  282:	    {
+    #####:  283:		if(token_ind >= 80) break; /* Added protection - hf */
+    $$$$$:  283-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  283-block  1
+    #####:  284:		token_str[token_ind++]=ch=get_char(tstream_ptr->ch_stream);
+    $$$$$:  284-block  0
+call    0 never executed
+        -:  285:	    }
+    #####:  286:            unget_char(ch,tstream_ptr->ch_stream);
+    $$$$$:  286-block  0
+call    0 never executed
+    #####:  287:            token_ind--;
+    #####:  288:            get_actual_token(token_str,token_ind);
+call    0 never executed
+    #####:  289:            strcpy(token_ptr->token_string,token_str);
+    #####:  290:            return(token_ptr);
+        -:  291:        }
+    #####:  292:        token_ptr->token_id=NUMERIC; /* Numeric case */
+    #####:  293:        unget_char(ch,tstream_ptr->ch_stream);
+    $$$$$:  293-block  0
+call    0 never executed
+    #####:  294:        token_ind--;
+    #####:  295:        get_actual_token(token_str,token_ind);
+call    0 never executed
+    #####:  296:        strcpy(token_ptr->token_string,token_str);
+    #####:  297:        return(token_ptr);
+        -:  298:}
+        -:  299:
+        -:  300:/* *****************************************************************
+        -:  301:   Function name : error_or_eof_case
+        -:  302:   Input         : tstream_ptr,token_ptr,cu_state,token_str,token_ind,ch
+        -:  303:   Output        : token_ptr
+        -:  304:   Exceptions    : none
+        -:  305:   Description   : This function checks whether it is EOF or not.
+        -:  306:                   If it is it returns EOF token else returns ERROR
+        -:  307:                   token.
+        -:  308: * *****************************************************************/
+        -:  309:
+function error_or_eof_case called 3 returned 100% blocks executed 78%
+        3:  310:static token error_or_eof_case(tstream_ptr,token_ptr,cu_state,token_str,token_ind,ch)
+        3:  310-block  0
+        -:  311:token_stream tstream_ptr;
+        -:  312:token token_ptr;
+        -:  313:int cu_state,token_ind;
+        -:  314:char token_str[],ch;
+        -:  315:{
+        3:  316:      if(is_end_of_character_stream(tstream_ptr->ch_stream))
+        3:  316-block  0
+call    0 returned 100%
+branch  1 taken 33% (fallthrough)
+branch  2 taken 67%
+        -:  317:      {
+        1:  318:            token_ptr->token_id = EOTSTREAM;
+        1:  319:            token_ptr->token_string[0]='\0';
+        1:  320:            return(token_ptr);
+        1:  320-block  0
+        -:  321:      }
+        2:  322:      if(cu_state !=0)
+        2:  322-block  0
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+        -:  323:      {
+    #####:  324:            unget_char(ch,tstream_ptr->ch_stream);
+    $$$$$:  324-block  0
+call    0 never executed
+    #####:  325:            token_ind--;
+        -:  326:      }
+        2:  327:      token_ptr->token_id=ERROR;
+        2:  328:      get_actual_token(token_str,token_ind);
+        2:  328-block  0
+call    0 returned 100%
+        2:  329:      strcpy(token_ptr->token_string,token_str);
+        2:  330:      return(token_ptr);
+        -:  331:}
+        -:  332:
+        -:  333:/* *********************************************************************
+        -:  334:   Function name : check_delimiter
+        -:  335:   Input         : character
+        -:  336:   Output        : boolean
+        -:  337:   Exceptions    : none.
+        -:  338:   Description   : This function checks for the delimiter. If ch is not
+        -:  339:                   alphabet and non numeric then it returns TRUE else
+        -:  340:                   it returns FALSE.
+        -:  341: * ******************************************************************* */
+        -:  342:
+function check_delimiter called 0 returned 0% blocks executed 0%
+    #####:  343:static int check_delimiter(ch)
+    $$$$$:  343-block  0
+        -:  344:char ch;
+        -:  345:{
+    #####:  346:      if(!isalpha(ch) && !isdigit(ch)) /* Check for digit and alpha */
+    $$$$$:  346-block  0
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+    $$$$$:  346-block  1
+call    3 never executed
+branch  4 never executed
+branch  5 never executed
+    #####:  347:          return(TRUE);
+    $$$$$:  347-block  0
+    #####:  348:      return(FALSE);
+    $$$$$:  348-block  0
+        -:  349:}
+        -:  350:
+        -:  351:/* ********************************************************************
+        -:  352:   Function name : keyword
+        -:  353:   Input         : state of the DFA
+        -:  354:   Output        : Keyword.
+        -:  355:   Exceptions    : If the state doesn't represent a keyword it exits.
+        -:  356:   Description   : According to the final state specified by state the
+        -:  357:                   respective token_id is returned.
+        -:  358: * ***************************************************************** */
+        -:  359:
+function keyword called 0 returned 0% blocks executed 0%
+    #####:  360:static int keyword(state)
+    $$$$$:  360-block  0
+        -:  361:int state;
+        -:  362:{
+    #####:  363:      switch(state)
+    $$$$$:  363-block  0
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+        -:  364:      {   /* Return the respective macro for the Keyword. */
+    #####:  365:          case 6 : return(LAMBDA);
+    $$$$$:  365-block  0
+    #####:  366:          case 9 : return(AND);
+    $$$$$:  366-block  0
+    #####:  367:          case 11: return(OR);
+    $$$$$:  367-block  0
+    #####:  368:          case 13: return(IF);
+    $$$$$:  368-block  0
+    #####:  369:          case 16: return(XOR);
+    $$$$$:  369-block  0
+    #####:  370:          default: fprintf(stdout, "error\n");break;
+    $$$$$:  370-block  0
+call    0 never executed
+        -:  371:      }
+    #####:  372:      exit(0);
+call    0 never executed
+        -:  373:}
+        -:  374:
+        -:  375:/* ********************************************************************
+        -:  376:   Function name : special
+        -:  377:   Input         : The state of the DFA.
+        -:  378:   Output        : special symbol.
+        -:  379:   Exceptions    : if the state doesn't belong to a special character
+        -:  380:                   it exits.
+        -:  381:   Description   : This function returns the token_id according to the
+        -:  382:                   final state given by state.
+        -:  383: * ****************************************************************** */
+        -:  384:
+function special called 0 returned 0% blocks executed 0%
+    #####:  385:static int special(state)
+    $$$$$:  385-block  0
+        -:  386:int state;
+        -:  387:{
+    #####:  388:     switch(state)
+    $$$$$:  388-block  0
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+branch  5 never executed
+branch  6 never executed
+branch  7 never executed
+branch  8 never executed
+        -:  389:     {   /* return the respective macro for the special character. */
+    #####:  390:         case 19: return(LPAREN);
+    $$$$$:  390-block  0
+    #####:  391:         case 20: return(RPAREN);
+    $$$$$:  391-block  0
+    #####:  392:         case 21: return(LSQUARE);
+    $$$$$:  392-block  0
+    #####:  393:         case 22: return(RSQUARE);
+    $$$$$:  393-block  0
+    #####:  394:         case 23: return(QUOTE);
+    $$$$$:  394-block  0
+    #####:  395:         case 24: return(BQUOTE);
+    $$$$$:  395-block  0
+    #####:  396:         case 25: return(COMMA);
+    $$$$$:  396-block  0
+    #####:  397:         case 32: return(EQUALGREATER);
+    $$$$$:  397-block  0
+    #####:  398:         default: fprintf(stdout, "error\n");break;
+    $$$$$:  398-block  0
+call    0 never executed
+        -:  399:     }
+    #####:  400:     exit(0);
+call    0 never executed
+        -:  401:}
+        -:  402:
+        -:  403:/* **********************************************************************
+        -:  404:   Function name : skip
+        -:  405:   Input         : character_stream
+        -:  406:   Output        : void.
+        -:  407:   Exceptions    : none.
+        -:  408:   Description   : This function skips the comment part of the program.
+        -:  409:                   It takes charcter_stream as input and reads character
+        -:  410:                   until it finds new line character or
+        -:  411:                   end_of_character_stream.
+        -:  412: * ******************************************************************* */
+        -:  413:
+function skip called 0 returned 0% blocks executed 0%
+    #####:  414:static void skip(stream_ptr)
+    $$$$$:  414-block  0
+        -:  415:character_stream stream_ptr;
+        -:  416:{
+        -:  417:        char c;
+        -:  418:
+    #####:  419:        while((c=get_char(stream_ptr))!='\n' &&
+    $$$$$:  419-block  0
+    $$$$$:  419-block  1
+call    0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+branch  4 never executed
+    #####:  420:               !is_end_of_character_stream(stream_ptr))
+    $$$$$:  420-block  0
+call    0 never executed
+        -:  421:             ; /* Skip the characters until EOF or EOL found. */
+    #####:  422:	if(c==EOF) unget_char(c, stream_ptr); /* Put back to leave gracefully - hf */
+    $$$$$:  422-block  0
+branch  0 never executed
+branch  1 never executed
+    $$$$$:  422-block  1
+call    2 never executed
+    #####:  423:        return;
+    $$$$$:  423-block  0
+        -:  424:}
+        -:  425:
+        -:  426:/* *********************************************************************
+        -:  427:   Function name : constant
+        -:  428:   Input         : state of DFA, Token string, Token id.
+        -:  429:   Output        : constant token.
+        -:  430:   Exceptions    : none.
+        -:  431:   Description   : This function returns the token_id for the constatnts
+        -:  432:                   speccified by  the final state.
+        -:  433: * ****************************************************************** */
+        -:  434:
+function constant called 1 returned 100% blocks executed 50%
+        1:  435:static int constant(state,token_str,token_ind)
+        1:  435-block  0
+        -:  436:int state,token_ind;
+        -:  437:char token_str[];
+        -:  438:{
+        1:  439:     switch(state)
+        1:  439-block  0
+branch  0 taken 0%
+branch  1 taken 100%
+branch  2 taken 0%
+        -:  440:     {   /* Return the respective CONSTANT macro. */
+    #####:  441:         case 27 : return(STRING_CONSTANT);
+    $$$$$:  441-block  0
+        1:  442:         case 29 : token_str[token_ind-2]=' '; return(CHARACTER_CONSTANT);
+        1:  442-block  0
+    #####:  443:         default : break;
+    $$$$$:  443-block  0
+        -:  444:     }
+    #####:  445:}
+    $$$$$:  445-block  0
+        -:  446:
+        -:  447:
+        -:  448:/* *******************************************************************
+        -:  449:   Function name : next_state
+        -:  450:   Input         : current state, character
+        -:  451:   Output        : next state of the DFA
+        -:  452:   Exceptions    : none.
+        -:  453:   Description   : This function returns the next state in the transition
+        -:  454:                   diagram. The next state is determined by the current
+        -:  455:                   state state and the inpu character ch.
+        -:  456: * ****************************************************************** */
+        -:  457:
+function next_state called 30 returned 100% blocks executed 100%
+       30:  458:static int next_state(state,ch)
+       30:  458-block  0
+        -:  459:int state;
+        -:  460:char ch;
+        -:  461:{
+       30:  462:    if(state < 0)
+       30:  462-block  0
+branch  0 taken 17% (fallthrough)
+branch  1 taken 83%
+        5:  463:      return(state);
+        5:  463-block  0
+       25:  464:    if(base[state]+ch >= 0)
+       25:  464-block  0
+branch  0 taken 92% (fallthrough)
+branch  1 taken 8%
+        -:  465:    {
+       23:  466:        if(check[base[state]+ch] == state) /* Check for the right state */
+       23:  466-block  0
+branch  0 taken 39% (fallthrough)
+branch  1 taken 61%
+        9:  467:             return(next[base[state]+ch]);
+        9:  467-block  0
+        -:  468:        else
+       14:  469:              return(next_state(default1[state],ch));
+       14:  469-block  0
+call    0 returned 100%
+        -:  470:    }
+        -:  471:    else
+        2:  472:        return(next_state(default1[state],ch));
+        2:  472-block  0
+call    0 returned 100%
+        -:  473:}
+        -:  474:
+        -:  475:/* *********************************************************************
+        -:  476:   Function name : is_eof_token
+        -:  477:   Input         : token
+        -:  478:   Output        : Boolean
+        -:  479:   Exceptions    : none.
+        -:  480:   Description   : This function checks whether the token t is eof_token
+        -:  481:                   or not. If the integer value stored in the t is
+        -:  482:                   EOTSTREAM then it is eof_token.
+        -:  483: * ***************************************************************** */
+        -:  484:
+function is_eof_token called 6 returned 100% blocks executed 100%
+        6:  485:BOOLEAN is_eof_token(t)
+        6:  485-block  0
+        -:  486:token t;
+        -:  487:{
+        6:  488:    if(t->token_id==EOTSTREAM)
+        6:  488-block  0
+branch  0 taken 17% (fallthrough)
+branch  1 taken 83%
+        1:  489:        return(TRUE);
+        1:  489-block  0
+        5:  490:    return(FALSE);
+        5:  490-block  0
+        -:  491:}
+        -:  492:
+        -:  493:/* ********************************************************************
+        -:  494:   Function name : print_token
+        -:  495:   Input         : token
+        -:  496:   Output        : Boolean
+        -:  497:   Exceptions    : none.
+        -:  498:   Description   : This function  prints the token. The token_id gives
+        -:  499:                   the type of token not the token itself. So, in the
+        -:  500:                   case of identifier,numeric,  string,character it is
+        -:  501:                   required to print the actual token  from token_str.
+        -:  502:                   So, precaution must be taken when printing the token.
+        -:  503:                   This function is able to print the current token only
+        -:  504:                   and it is the limitation of the program.
+        -:  505: * ******************************************************************** */
+        -:  506:
+function print_token called 6 returned 100% blocks executed 31%
+        6:  507:BOOLEAN print_token(token_ptr)
+        6:  507-block  0
+        -:  508:token token_ptr;
+        -:  509:{
+        6:  510:     switch(token_ptr->token_id)
+        6:  510-block  0
+branch  0 taken 33%
+branch  1 taken 17%
+branch  2 taken 0%
+branch  3 taken 0%
+branch  4 taken 0%
+branch  5 taken 0%
+branch  6 taken 0%
+branch  7 taken 33%
+branch  8 taken 0%
+branch  9 taken 0%
+branch 10 taken 0%
+branch 11 taken 0%
+branch 12 taken 0%
+branch 13 taken 0%
+branch 14 taken 0%
+branch 15 taken 0%
+branch 16 taken 0%
+branch 17 taken 17%
+branch 18 taken 0%
+branch 19 taken 0%
+        -:  511:     {    /* Print the respective tokens. */
+        2:  512:          case ERROR : fprintf(stdout, "error,\t\"");fprintf(stdout, "%s",token_ptr->token_string);
+        2:  512-block  0
+call    0 returned 100%
+call    1 returned 100%
+        2:  513:                       fprintf(stdout, "\".\n");return(TRUE);
+call    0 returned 100%
+        1:  514:          case EOTSTREAM : fprintf(stdout, "eof.\n");return(TRUE);
+        1:  514-block  0
+call    0 returned 100%
+    #####:  515:          case 6 : fprintf(stdout, "keyword,\t\"lambda\".\n");return(TRUE);
+    $$$$$:  515-block  0
+call    0 never executed
+    #####:  516:          case 9 : fprintf(stdout, "keyword,\t\"and\".\n");return(TRUE);
+    $$$$$:  516-block  0
+call    0 never executed
+    #####:  517:          case 11: fprintf(stdout, "keyword,\t\"or\".\n");return(TRUE);
+    $$$$$:  517-block  0
+call    0 never executed
+    #####:  518:          case 13: fprintf(stdout, "keyword,\t\"if\".\n");return(TRUE);
+    $$$$$:  518-block  0
+call    0 never executed
+    #####:  519:          case 16: fprintf(stdout, "keyword,\t\"xor\".\n");return(TRUE);
+    $$$$$:  519-block  0
+call    0 never executed
+        2:  520:          case 17: fprintf(stdout, "identifier,\t\"");fprintf(stdout, "%s",token_ptr->token_string);
+        2:  520-block  0
+call    0 returned 100%
+call    1 returned 100%
+        2:  521:                   fprintf(stdout, "\".\n");return(TRUE);
+call    0 returned 100%
+    #####:  522:          case 18: fprintf(stdout, "numeric,\t");fprintf(stdout, "%s",token_ptr->token_string);
+    $$$$$:  522-block  0
+call    0 never executed
+call    1 never executed
+    #####:  523:                   fprintf(stdout, ".\n");return(TRUE);
+call    0 never executed
+    #####:  524:          case 19: fprintf(stdout, "lparen.\n");return(TRUE);
+    $$$$$:  524-block  0
+call    0 never executed
+    #####:  525:          case 20: fprintf(stdout, "rparen.\n");return(TRUE);
+    $$$$$:  525-block  0
+call    0 never executed
+    #####:  526:          case 21: fprintf(stdout, "lsquare.\n");return(TRUE);
+    $$$$$:  526-block  0
+call    0 never executed
+    #####:  527:          case 22: fprintf(stdout, "rsquare.\n");return(TRUE);
+    $$$$$:  527-block  0
+call    0 never executed
+    #####:  528:          case 23: fprintf(stdout, "quote.\n");return(TRUE);
+    $$$$$:  528-block  0
+call    0 never executed
+    #####:  529:          case 24: fprintf(stdout, "bquote.\n");return(TRUE);
+    $$$$$:  529-block  0
+call    0 never executed
+    #####:  530:          case 25: fprintf(stdout, "comma.\n");return(TRUE);
+    $$$$$:  530-block  0
+call    0 never executed
+    #####:  531:          case 27: fprintf(stdout, "string,\t");fprintf(stdout, "%s",token_ptr->token_string);
+    $$$$$:  531-block  0
+call    0 never executed
+call    1 never executed
+    #####:  532:                   fprintf(stdout, ".\n");return(TRUE);
+call    0 never executed
+        1:  533:          case 29: fprintf(stdout, "character,\t\"");fprintf(stdout, "%s",token_ptr->token_string);
+        1:  533-block  0
+call    0 returned 100%
+call    1 returned 100%
+        1:  534:                   fprintf(stdout, "\".\n");return(TRUE);
+call    0 returned 100%
+    #####:  535:          case 32: fprintf(stdout, "keyword,\t\"=>\".\n");return(TRUE);
+    $$$$$:  535-block  0
+call    0 never executed
+    #####:  536:          default: break;
+    $$$$$:  536-block  0
+        -:  537:      }
+    #####:  538:      return(FALSE);
+    $$$$$:  538-block  0
+        -:  539:}
+        -:  540:
+        -:  541:/* **********************************************************************
+        -:  542:   Function name : get_actual_token
+        -:  543:   Input         : token string and token id.
+        -:  544:   Output        : void.
+        -:  545:   Exceptions    : none.
+        -:  546:   Description   : This function prints the actual token in the case of
+        -:  547:                   identifier,numeric,string and character. It removes
+        -:  548:                   the leading and trailing  spaces and prints the token.
+        -:  549: * ****************************************************************** */
+        -:  550:
+function get_actual_token called 5 returned 100% blocks executed 94%
+        5:  551:static void get_actual_token(token_str,token_ind)
+        5:  551-block  0
+        -:  552:int token_ind;
+        -:  553:char token_str[];
+        -:  554:{
+        -:  555:          int ind,start;
+        -:  556:
+        5:  557:          for(ind=token_ind;ind>0 && isspace(token_str[ind-1]);--ind);
+        5:  557-block  0
+    $$$$$:  557-block  1
+        5:  557-block  2
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        5:  557-block  3
+call    2 returned 100%
+branch  3 taken 0%
+branch  4 taken 100% (fallthrough)
+        -:  558:                        /* Delete the trailing white spaces & protect - hf */
+        5:  559:           token_str[ind]='\0';token_ind=ind;
+        6:  560:          for(ind=0;ind<token_ind;++ind)
+        5:  560-block  0
+        1:  560-block  1
+        6:  560-block  2
+branch  0 taken 100%
+branch  1 taken 0% (fallthrough)
+        6:  561:                if(!isspace(token_str[ind]))
+        6:  561-block  0
+call    0 returned 100%
+branch  1 taken 83% (fallthrough)
+branch  2 taken 17%
+        5:  562:                      break;
+        5:  562-block  0
+       20:  563:          for(start=0;ind<=token_ind;++start,++ind) /* Delete the leading
+        5:  563-block  0
+       15:  563-block  1
+       20:  563-block  2
+branch  0 taken 75%
+branch  1 taken 25% (fallthrough)
+        -:  564:                                                       white spaces. */
+       15:  565:                token_str[start]=token_str[ind];
+        5:  566:          return;
+        5:  566-block  0
+        -:  567:}
+        -:  568:

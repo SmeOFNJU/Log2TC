@@ -1,0 +1,363 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns="http://www.owl-ontologies.com/zzxTC.owl#"
+  xml:base="http://www.owl-ontologies.com/zzxTC.owl">
+  <owl:Ontology rdf:about=""/>
+  <owl:Class rdf:ID="MiddleLevel">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="TestLevel"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Automatics">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="SourceType"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="TestTarget"/>
+  <owl:Class rdf:ID="HighLevel">
+    <rdfs:subClassOf rdf:resource="#TestLevel"/>
+  </owl:Class>
+  <owl:Class rdf:ID="DataSource"/>
+  <owl:Class rdf:ID="TestData"/>
+  <owl:Class rdf:ID="MiddleResult">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="TestResult"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Manual">
+    <rdfs:subClassOf rdf:resource="#SourceType"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Network">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="TestEnvironment"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="TestProcess"/>
+  <owl:Class rdf:ID="FinalResult">
+    <rdfs:subClassOf rdf:resource="#TestResult"/>
+  </owl:Class>
+  <owl:Class rdf:ID="DataContent"/>
+  <owl:Class rdf:ID="Software">
+    <rdfs:subClassOf rdf:resource="#TestEnvironment"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Version">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="TestProfile"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Author">
+    <rdfs:subClassOf rdf:resource="#TestProfile"/>
+  </owl:Class>
+  <owl:Class rdf:ID="SystemTest">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="TargetType"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="FunctionSequence">
+    <rdfs:subClassOf rdf:resource="#TestProcess"/>
+  </owl:Class>
+  <owl:Class rdf:ID="TestCase"/>
+  <owl:Class rdf:ID="IntegrationTest">
+    <rdfs:subClassOf rdf:resource="#TargetType"/>
+  </owl:Class>
+  <owl:Class rdf:ID="LowLevel">
+    <rdfs:subClassOf rdf:resource="#TestLevel"/>
+  </owl:Class>
+  <owl:Class rdf:ID="HardWare">
+    <rdfs:subClassOf rdf:resource="#TestEnvironment"/>
+  </owl:Class>
+  <owl:Class rdf:ID="UnitTest">
+    <rdfs:subClassOf rdf:resource="#TargetType"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:ID="hasData">
+    <rdfs:domain rdf:resource="#TestCase"/>
+    <rdfs:range rdf:resource="#TestData"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasSourceType">
+    <rdfs:range rdf:resource="#SourceType"/>
+    <rdfs:domain rdf:resource="#DataSource"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasSource">
+    <rdfs:domain rdf:resource="#TestData"/>
+    <rdfs:range rdf:resource="#DataSource"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasResult">
+    <rdfs:range rdf:resource="#TestResult"/>
+    <rdfs:domain rdf:resource="#TestCase"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasTargetType">
+    <rdfs:range rdf:resource="#TargetType"/>
+    <rdfs:domain rdf:resource="#TestTarget"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasProcess">
+    <rdfs:domain rdf:resource="#TestCase"/>
+    <rdfs:range rdf:resource="#TestProcess"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasProfile">
+    <rdfs:domain rdf:resource="#TestCase"/>
+    <rdfs:range rdf:resource="#TestProfile"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasContent">
+    <rdfs:domain rdf:resource="#TestData"/>
+    <rdfs:range rdf:resource="#DataContent"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasEnvironment">
+    <rdfs:domain rdf:resource="#TestCase"/>
+    <rdfs:range rdf:resource="#TestEnvironment"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:ID="versionValue">
+    <rdfs:domain rdf:resource="#Version"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="resultValue">
+    <rdfs:domain rdf:resource="#TestResult"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="targetDescripton">
+    <rdfs:domain rdf:resource="#TestTarget"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="environValue">
+    <rdfs:domain rdf:resource="#TestEnvironment"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dataContentValue">
+    <rdfs:domain rdf:resource="#DataContent"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="levelValue">
+    <rdfs:domain rdf:resource="#TestLevel"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="authorValue">
+    <rdfs:domain rdf:resource="#Author"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="orderingValue">
+    <rdfs:domain rdf:resource="#FunctionSequence"/>
+  </owl:DatatypeProperty>
+  <owl:TransitiveProperty rdf:ID="Before">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="#TestCase"/>
+    <rdfs:range rdf:resource="#TestCase"/>
+  </owl:TransitiveProperty>
+  <owl:SymmetricProperty rdf:ID="similarTC">
+    <rdfs:domain rdf:resource="#TestCase"/>
+    <owl:inverseOf rdf:resource="#similarTC"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="#TestCase"/>
+  </owl:SymmetricProperty>
+  <owl:FunctionalProperty rdf:ID="hasLevel">
+    <rdfs:range rdf:resource="#TestLevel"/>
+    <rdfs:domain rdf:resource="#TestCase"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="hasTarget">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:range rdf:resource="#TestTarget"/>
+    <rdfs:domain rdf:resource="#TestCase"/>
+  </owl:FunctionalProperty>
+  <Version rdf:ID="newVer">
+    <versionValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >1.2.3</versionValue>
+  </Version>
+  <TestCase rdf:ID="BuyNewStock">
+    <hasProcess>
+      <FunctionSequence rdf:ID="Fsq2">
+        <orderingValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >64105586410530641022364102244610312 </orderingValue>
+      </FunctionSequence>
+    </hasProcess>
+    <hasTarget>
+      <TestTarget rdf:ID="buynew">
+        <targetDescripton rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >new stock buy tesing</targetDescripton>
+        <hasTargetType>
+          <SystemTest rdf:ID="newStockBuyTest"/>
+        </hasTargetType>
+      </TestTarget>
+    </hasTarget>
+    <hasLevel>
+      <LowLevel rdf:ID="low">
+        <levelValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+        >1</levelValue>
+      </LowLevel>
+    </hasLevel>
+  </TestCase>
+  <TestCase rdf:ID="unit1">
+    <hasData>
+      <TestData rdf:ID="Fundid">
+        <hasContent>
+          <DataContent rdf:ID="custID">
+            <dataContentValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >10021</dataContentValue>
+          </DataContent>
+        </hasContent>
+        <hasSource>
+          <DataSource rdf:ID="custInput">
+            <hasSourceType>
+              <Manual rdf:ID="textInput"/>
+            </hasSourceType>
+          </DataSource>
+        </hasSource>
+      </TestData>
+    </hasData>
+    <hasProfile>
+      <Author rdf:ID="zzx">
+        <authorValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >zzx</authorValue>
+      </Author>
+    </hasProfile>
+    <hasProfile rdf:resource="#newVer"/>
+    <hasLevel>
+      <MiddleLevel rdf:ID="MiddleLevel1">
+        <levelValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+        >5</levelValue>
+      </MiddleLevel>
+    </hasLevel>
+    <hasProcess>
+      <FunctionSequence rdf:ID="UnitTest1">
+        <orderingValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >6410503</orderingValue>
+      </FunctionSequence>
+    </hasProcess>
+    <hasTarget>
+      <TestTarget rdf:ID="query_Stock">
+        <targetDescripton rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >test the query of stock details</targetDescripton>
+        <hasTargetType>
+          <UnitTest rdf:ID="queryStock"/>
+        </hasTargetType>
+      </TestTarget>
+    </hasTarget>
+    <hasEnvironment>
+      <Software rdf:ID="FUYI">
+        <environValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >FUYI_CLient</environValue>
+      </Software>
+    </hasEnvironment>
+  </TestCase>
+  <TestTarget rdf:ID="buy_new">
+    <targetDescripton rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >new stock buying test</targetDescripton>
+    <hasTargetType rdf:resource="#newStockBuyTest"/>
+  </TestTarget>
+  <Network rdf:ID="paraware_a39c7bd2-0ec9-4bea-9ca9-861ccf4533b9">
+    <environValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    ></environValue>
+  </Network>
+  <Author rdf:ID="author_a39c7bd2-0ec9-4bea-9ca9-861ccf4533b9">
+    <authorValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >sa</authorValue>
+  </Author>
+  <HardWare rdf:ID="hardware_a39c7bd2-0ec9-4bea-9ca9-861ccf4533b9">
+    <environValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >sa</environValue>
+  </HardWare>
+  <TestData rdf:ID="data_3610992c-db07-4bae-ab53-f26eb1cd32df">
+    <hasContent>
+      <DataContent rdf:ID="dataContent_3610992c-db07-4bae-ab53-f26eb1cd32df">
+        <dataContentValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >da's</dataContentValue>
+      </DataContent>
+    </hasContent>
+    <hasSource>
+      <Manual rdf:ID="dataSource_3610992c-db07-4bae-ab53-f26eb1cd32df"/>
+    </hasSource>
+  </TestData>
+  <UnitTest rdf:ID="AvailFundQueryTest"/>
+  <Version rdf:ID="version_3610992c-db07-4bae-ab53-f26eb1cd32df">
+    <versionValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >sa'd</versionValue>
+  </Version>
+  <TestData rdf:ID="data_a39c7bd2-0ec9-4bea-9ca9-861ccf4533b9">
+    <hasSource>
+      <Manual rdf:ID="dataSource_a39c7bd2-0ec9-4bea-9ca9-861ccf4533b9"/>
+    </hasSource>
+    <hasContent>
+      <DataContent rdf:ID="dataContent_a39c7bd2-0ec9-4bea-9ca9-861ccf4533b9">
+        <dataContentValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >sa</dataContentValue>
+      </DataContent>
+    </hasContent>
+  </TestData>
+  <HighLevel rdf:ID="Urgent">
+    <levelValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+    >6</levelValue>
+  </HighLevel>
+  <HardWare rdf:ID="hardware_3610992c-db07-4bae-ab53-f26eb1cd32df">
+    <environValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >sa'd</environValue>
+  </HardWare>
+  <MiddleResult rdf:ID="middleRe_3610992c-db07-4bae-ab53-f26eb1cd32df">
+    <resultValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >sa'd</resultValue>
+  </MiddleResult>
+  <HighLevel rdf:ID="level_3610992c-db07-4bae-ab53-f26eb1cd32df">
+    <levelValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+    >3</levelValue>
+  </HighLevel>
+  <FinalResult rdf:ID="myExpResult">
+    <resultValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >output the correct available amount</resultValue>
+  </FinalResult>
+  <FinalResult rdf:ID="finalRe_3610992c-db07-4bae-ab53-f26eb1cd32df">
+    <resultValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >a'd's</resultValue>
+  </FinalResult>
+  <FunctionSequence rdf:ID="Fsq3">
+    <orderingValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >64105586410530641022364102244610312 </orderingValue>
+  </FunctionSequence>
+  <Network rdf:ID="paraware_3610992c-db07-4bae-ab53-f26eb1cd32df">
+    <environValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >da's</environValue>
+  </Network>
+  <TestCase rdf:ID="buyStockNew">
+    <hasProcess rdf:resource="#Fsq3"/>
+    <hasTarget rdf:resource="#buy_new"/>
+    <hasLevel rdf:resource="#MiddleLevel1"/>
+  </TestCase>
+  <MiddleResult rdf:ID="middleRe_a39c7bd2-0ec9-4bea-9ca9-861ccf4533b9">
+    <resultValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >sa</resultValue>
+  </MiddleResult>
+  <FunctionSequence rdf:ID="Fsq1">
+    <orderingValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >641050164105586410530641022364102246410312</orderingValue>
+  </FunctionSequence>
+  <Software rdf:ID="software_a39c7bd2-0ec9-4bea-9ca9-861ccf4533b9">
+    <environValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    ></environValue>
+  </Software>
+  <Software rdf:ID="software_3610992c-db07-4bae-ab53-f26eb1cd32df">
+    <environValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >a'd</environValue>
+  </Software>
+  <TestTarget rdf:ID="buynew1">
+    <targetDescripton rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >test of buying new stock</targetDescripton>
+    <hasTargetType rdf:resource="#newStockBuyTest"/>
+  </TestTarget>
+  <TestCase rdf:ID="NewStockBuy">
+    <hasTarget rdf:resource="#buynew1"/>
+    <hasLevel rdf:resource="#Urgent"/>
+    <hasProcess rdf:resource="#Fsq1"/>
+  </TestCase>
+  <Version rdf:ID="version_a39c7bd2-0ec9-4bea-9ca9-861ccf4533b9">
+    <versionValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >sa</versionValue>
+  </Version>
+  <HighLevel rdf:ID="level_a39c7bd2-0ec9-4bea-9ca9-861ccf4533b9">
+    <levelValue rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+    >0</levelValue>
+  </HighLevel>
+  <FinalResult rdf:ID="finalRe_a39c7bd2-0ec9-4bea-9ca9-861ccf4533b9">
+    <resultValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >sa</resultValue>
+  </FinalResult>
+  <Author rdf:ID="author_3610992c-db07-4bae-ab53-f26eb1cd32df">
+    <authorValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >d'sa</authorValue>
+  </Author>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.3.1, Build 430)  http://protege.stanford.edu -->

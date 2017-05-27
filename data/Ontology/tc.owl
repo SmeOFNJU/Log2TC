@@ -1,0 +1,248 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#"
+     xml:base="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#Author -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#Author">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestProfile"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#Automatics -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#Automatics">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#SourceType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#DataContent -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#DataContent">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestData"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#DataSource -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#DataSource">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestData"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#FinalResult -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#FinalResult">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestResult"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#FunctionSequence -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#FunctionSequence">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestProcess"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#Hardware -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#Hardware">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestEnvironment"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#HighLevel -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#HighLevel">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestLevel"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#IntegrationTest -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#IntegrationTest">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TargetType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#LowLevel -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#LowLevel">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestLevel"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#Manual -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#Manual">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#SourceType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#MiddleLevel -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#MiddleLevel">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestLevel"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#MiddleResult -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#MiddleResult">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestResult"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#Network -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#Network">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestEnvironment"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#Software -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#Software">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestEnvironment"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#SourceType -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#SourceType">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#DataSource"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#SystemTest -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#SystemTest">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TargetType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TargetType -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TargetType">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestTarget"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestCase -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestCase"/>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestData -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestData">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestCase"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestEnvironment -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestEnvironment">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestCase"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestLevel -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestLevel">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestCase"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestProcess -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestProcess">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestCase"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestProfile -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestProfile">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestCase"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestResult -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestResult">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestCase"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestTarget -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestTarget">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestCase"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#UnitTest -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#UnitTest">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TargetType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#Version -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#Version">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-24#TestProfile"/>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.2.6.20160910-2108) https://github.com/owlcs/owlapi -->
+

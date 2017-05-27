@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-28#"
+  xml:base="http://www.semanticweb.org/zzxwin7/ontologies/2017/3/untitled-ontology-28">
+  <owl:Ontology rdf:about=""/>
+  <owl:Class rdf:ID="User">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Log"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="ExtraData">
+    <rdfs:subClassOf rdf:resource="#Log"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Time">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="TimeStamp"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="InputData">
+    <rdfs:subClassOf rdf:resource="#ExtraData"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Event">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Session"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="SourceSoftware">
+    <rdfs:subClassOf rdf:resource="#ExtraData"/>
+  </owl:Class>
+  <owl:Class rdf:ID="EventFollow">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Session"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#TimeStamp">
+    <rdfs:subClassOf rdf:resource="#Log"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Date">
+    <rdfs:subClassOf rdf:resource="#TimeStamp"/>
+  </owl:Class>
+  <owl:Class rdf:about="#Session">
+    <rdfs:subClassOf rdf:resource="#Log"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:ID="After">
+    <rdfs:domain rdf:resource="#Event"/>
+    <rdfs:range rdf:resource="#Event"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Has_Session">
+    <rdfs:domain rdf:resource="#Log"/>
+    <rdfs:range rdf:resource="#Session"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Has_User">
+    <rdfs:range rdf:resource="#User"/>
+    <rdfs:domain rdf:resource="#Log"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Has_TimeStamp">
+    <rdfs:range rdf:resource="#TimeStamp"/>
+    <rdfs:domain rdf:resource="#Log"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Has_EventFollow">
+    <rdfs:domain rdf:resource="#Session"/>
+    <rdfs:range rdf:resource="#EventFollow"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Has_ExtraData">
+    <rdfs:domain rdf:resource="#Log"/>
+    <rdfs:range rdf:resource="#ExtraData"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="Has_Event">
+    <rdfs:range rdf:resource="#Event"/>
+    <rdfs:domain rdf:resource="#Session"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:ID="softName">
+    <rdfs:domain rdf:resource="#SourceSoftware"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="inputDataValue">
+    <rdfs:domain rdf:resource="#InputData"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="userID">
+    <rdfs:domain rdf:resource="#User"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="eventFollowValue">
+    <rdfs:domain rdf:resource="#EventFollow"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dateValue">
+    <rdfs:domain rdf:resource="#Date"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="timeValue">
+    <rdfs:domain rdf:resource="#Time"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="eventName">
+    <rdfs:domain rdf:resource="#Event"/>
+  </owl:DatatypeProperty>
+  <SourceSoftware rdf:ID="SourceSoftware_21">
+    <softName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Fuyi</softName>
+  </SourceSoftware>
+  <Event rdf:ID="Event_19">
+    <eventName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >410530</eventName>
+  </Event>
+  <EventFollow rdf:ID="EventFollow_20">
+    <eventFollowValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >410503,410530</eventFollowValue>
+  </EventFollow>
+  <User rdf:ID="User_13">
+    <userID rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >1001</userID>
+  </User>
+  <Event rdf:ID="Event_15">
+    <eventName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >410503</eventName>
+  </Event>
+  <Time rdf:ID="Time_9">
+    <timeValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >110534</timeValue>
+  </Time>
+  <Log rdf:ID="Log_1">
+    <Has_TimeStamp rdf:resource="#Time_9"/>
+    <Has_TimeStamp>
+      <Date rdf:ID="Date_8">
+        <dateValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >20170217</dateValue>
+      </Date>
+    </Has_TimeStamp>
+    <Has_ExtraData rdf:resource="#SourceSoftware_21"/>
+    <Has_ExtraData>
+      <InputData rdf:ID="InputData_23">
+        <inputDataValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >10000</inputDataValue>
+      </InputData>
+    </Has_ExtraData>
+    <Has_Session rdf:resource="#EventFollow_20"/>
+    <Has_User rdf:resource="#User_13"/>
+  </Log>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.3.1, Build 430)  http://protege.stanford.edu -->
